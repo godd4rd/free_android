@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">Free</string>
+
+    <!--Root Activity -->
+    <string name="title_activity_root">RootActivity</string>
+
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <!--Login View-->
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="loginTitle">Me@Three</string>
+    <string name="emailInputHit">Employee ID</string>
+    <string name="passwordInputHint">Password</string>
+    <string name="signInButtonTxt">Sign In</string>
+
+
+    <!--Search View-->
+    <string name="searchTitle">Search</string>
+    <string name="settingsTitle">Setting</string>
+    <string name="favoritesTitle">Favourite Places</string>
+    <string name="helpTitle">Help</string>
+    <string name="feedbackTitle">Feedback</string>
+    <string name="title_activity_type_select">TypeSelectActivity</string>
+
 </resources>
