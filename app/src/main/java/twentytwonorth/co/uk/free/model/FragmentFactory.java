@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import twentytwonorth.co.uk.free.R;
+import twentytwonorth.co.uk.free.controller.BookingsFragment;
 import twentytwonorth.co.uk.free.controller.RootActivity;
-import twentytwonorth.co.uk.free.controller.SearchFragment;
 
 
 /**
@@ -17,10 +17,10 @@ import twentytwonorth.co.uk.free.controller.SearchFragment;
  */
 public class FragmentFactory {
 
-    public static final String SEARCH = "search";
-    public static final String FAVORITE = "favorite";
-    public static final String HELP = "help";
+    public static final String FREE = "free";
     public static final String FEEDBACK = "feedback";
+    public static final String HELP = "help";
+
 
     public static Fragment fragment( String section, int sectionNumber ){
 
@@ -29,8 +29,8 @@ public class FragmentFactory {
         }
 
         switch (section){
-            case SEARCH:
-                return new SearchFragment();
+            case FREE:
+                return new BookingsFragment();
             default:
                 return PlaceholderFragment.newInstance( sectionNumber );
         }

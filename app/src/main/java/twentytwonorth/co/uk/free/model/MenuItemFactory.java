@@ -16,16 +16,12 @@ public class MenuItemFactory {
 
     public static ArrayList<NavigationDrawerFragment.OptionMenuItem> createMenuData( Context context ){
 
-
         ArrayList<NavigationDrawerFragment.OptionMenuItem> items =
                 new ArrayList<NavigationDrawerFragment.OptionMenuItem>();
 
-        items.add( new MenuNavigationItem( context.getString(R.string.searchTitle) , "test", FragmentFactory.SEARCH ));
-        items.add( new MenuNavigationItem( context.getString(R.string.settingsTitle) , "test", ""));
-        items.add( new MenuNavigationItem( context.getString(R.string.favoritesTitle), "test", ""));
+        items.add( new MenuNavigationItem( context.getString(R.string.freeTitle) , "test", FragmentFactory.FREE ));
+        items.add( new MenuNavigationItem( context.getString(R.string.feedbackTitle) , "test", ""));
         items.add( new MenuNavigationItem( context.getString(R.string.helpTitle), "test", ""));
-        items.add( new MenuNavigationItem( context.getString(R.string.feedbackTitle), "test", ""));
-        items.add( new MenuNavigationItem("Logout", "test", ""));
 
         return items;
     }
