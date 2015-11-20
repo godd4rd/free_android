@@ -1,9 +1,8 @@
-package twentytwonorth.co.uk.free.controller;
+package uk.co.twentytwonorth.free.controller;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -11,9 +10,9 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-import twentytwonorth.co.uk.free.R;
-import twentytwonorth.co.uk.free.model.FragmentFactory;
-import twentytwonorth.co.uk.free.model.MenuItemFactory;
+import uk.co.twentytwonorth.free.R;
+import uk.co.twentytwonorth.free.model.FragmentFactory;
+import uk.co.twentytwonorth.free.model.MenuItemFactory;
 
 public class RootActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -47,6 +46,8 @@ public class RootActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout), mMenuData);
+
+        this.onNavigationDrawerItemSelected( 0 );
     }
 
     @Override

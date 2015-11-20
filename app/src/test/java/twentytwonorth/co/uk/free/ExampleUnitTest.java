@@ -1,4 +1,4 @@
-package twentytwonorth.co.uk.free;
+package uk.co.twentytwonorth.free;
 
 import org.junit.Test;
 

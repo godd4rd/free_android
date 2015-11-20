@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="twentytwonorth.co.uk.free">
+    package="uk.co.twentytwonorth.free">
 
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.MainActivity">
+        <activity android:name="uk.co.twentytwonorth.free.controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,13 +22,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controller.LoginActivity"
+            android:name="uk.co.twentytwonorth.free.controller.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".controller.RootActivity"
+            android:name="uk.co.twentytwonorth.free.controller.RootActivity"
             android:label="@string/title_activity_root" />
         <activity
-            android:name=".controller.TypeSelectActivity"
+            android:name="uk.co.twentytwonorth.free.controller.TypeSelectActivity"
             android:label="@string/title_activity_type_select"></activity>
     </application>
 

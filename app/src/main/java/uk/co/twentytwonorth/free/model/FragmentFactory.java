@@ -1,4 +1,4 @@
-package twentytwonorth.co.uk.free.model;
+package uk.co.twentytwonorth.free.model;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import twentytwonorth.co.uk.free.R;
-import twentytwonorth.co.uk.free.controller.BookingsFragment;
-import twentytwonorth.co.uk.free.controller.RootActivity;
+import uk.co.twentytwonorth.free.R;
+import uk.co.twentytwonorth.free.controller.BookingsFragment;
+import uk.co.twentytwonorth.free.controller.RootActivity;
 
 
 /**

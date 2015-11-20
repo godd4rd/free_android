@@ -1,4 +1,4 @@
-package twentytwonorth.co.uk.free;
+package uk.co.twentytwonorth.free;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

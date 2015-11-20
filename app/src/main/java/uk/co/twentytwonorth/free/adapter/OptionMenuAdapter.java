@@ -1,4 +1,4 @@
-package twentytwonorth.co.uk.free.adapter;
+package uk.co.twentytwonorth.free.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import twentytwonorth.co.uk.free.controller.NavigationDrawerFragment;
+import uk.co.twentytwonorth.free.controller.NavigationDrawerFragment;
 
 /**
  * Created by colinlight on 18/11/15.

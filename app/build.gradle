@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "twentytwonorth.co.uk.free"
+        applicationId "uk.co.twentytwonorth.free"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

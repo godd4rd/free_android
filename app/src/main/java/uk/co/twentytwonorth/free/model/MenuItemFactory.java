@@ -1,12 +1,12 @@
-package twentytwonorth.co.uk.free.model;
+package uk.co.twentytwonorth.free.model;
 
 
 import android.content.Context;
 import java.util.ArrayList;
 
 
-import twentytwonorth.co.uk.free.R;
-import twentytwonorth.co.uk.free.controller.NavigationDrawerFragment;
+import uk.co.twentytwonorth.free.R;
+import uk.co.twentytwonorth.free.controller.NavigationDrawerFragment;
 
 /**
  * Created by colinlight on 30/04/15.

@@ -1,11 +1,11 @@
-package twentytwonorth.co.uk.free.controller;
+package uk.co.twentytwonorth.free.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
 
-import twentytwonorth.co.uk.free.R;
+import uk.co.twentytwonorth.free.R;
 
 public class TypeSelectActivity extends Activity {
 

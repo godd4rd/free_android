@@ -1,4 +1,4 @@
-package twentytwonorth.co.uk.free.controller;
+package uk.co.twentytwonorth.free.controller;
 
 import android.content.Context;
 import android.app.Activity;
@@ -24,8 +24,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import twentytwonorth.co.uk.free.R;
-import twentytwonorth.co.uk.free.adapter.OptionMenuAdapter;
+import uk.co.twentytwonorth.free.R;
+import uk.co.twentytwonorth.free.adapter.OptionMenuAdapter;
 
 
 /**
