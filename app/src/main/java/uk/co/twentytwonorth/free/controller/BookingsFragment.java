@@ -11,7 +11,7 @@ import android.widget.GridView;
 import java.util.Date;
 
 import uk.co.twentytwonorth.free.R;
-import uk.co.twentytwonorth.utils.components.calendar.CalendarAdapter;
+import uk.co.twentytwonorth.utils.components.calendar.MonthAdapter;
 import uk.co.twentytwonorth.utils.components.calendar.CalendarDataSource;
 
 
@@ -27,7 +27,7 @@ public class BookingsFragment extends Fragment {
         Date now = new Date();
 
         GridView calendarGrid = (GridView)view.findViewById(R.id.calendarGridView);
-        CalendarAdapter adapter = new CalendarAdapter( this.getActivity().getApplicationContext(), now);
+        MonthAdapter adapter = new MonthAdapter( this.getActivity().getApplicationContext(), now);
         CalendarDataSource.CalendarPeriod period = (CalendarDataSource.CalendarPeriod)adapter;
         calendarGrid.setNumColumns( period.getNumberOfDaysPerColumn() );
         calendarGrid.setAdapter(adapter);

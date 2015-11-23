@@ -6,6 +6,7 @@ import android.util.Pair;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -14,17 +15,17 @@ import java.util.TimeZone;
 public class CalendarDataSource {
 
     /**
-     Types adopting the 'ICalendarViewItem' interface can be used to represent a view item in the
-     calendar view
+     Types adopting the 'ICalendarItem' interface can be used to represent an item in the
+     calendar view, this could be a day or a day header
      */
-    public interface ICalendarViewItem{
+    public interface ICalendarItem{
         public String getTitle();
     }
 
     /**
      Types adopting the 'Day' interface can be used to represent day information on a calendar view
      */
-    public interface IDay extends ICalendarViewItem{
+    public interface IDay extends ICalendarItem{
 
         public void setDate( Date date );
         public Date getDate();
@@ -65,6 +66,14 @@ public class CalendarDataSource {
         public void selectedINdexChanged( CalendarPeriod period );
     }
 
+    /**
+     * Returns a list of days based on a specific date and field passed
+     * @param date
+     * @param isToday
+     * @param isCurrentMonth :
+     * @param calendarField : the period the data range should be
+     * @return
+     */
     public static Pair<ArrayList<IDay>, Integer>daysForTimeframe( Date date, Boolean isToday,
                                                                   Boolean isCurrentMonth,
                                                                   int calendarField ){
@@ -93,6 +102,14 @@ public class CalendarDataSource {
     }
 
 
+    /**
+     * Add days to the start and end of the month. e.g. The 1st on the month starts on a Wednesday,
+     * because the calendar displays whole weeks we must include Monday to and Thursday of the
+     * previous month
+     * @param monthDays
+     * @param curentDayIndex
+     * @return
+     */
     public static Pair<ArrayList<IDay>, Integer>addMonthOverflowDays( ArrayList<IDay> monthDays,
                                                                       int curentDayIndex){
         Date startDate = monthDays.get(0).getDate();
@@ -125,23 +142,58 @@ public class CalendarDataSource {
         return  Pair.create( startDays , dayIndex);
     }
 
-    public static Pair<ArrayList<IDay>, Integer>addDayHeaders( ArrayList<IDay> days, int curentDayIndex){
 
+    /**
+     * Add days headers to an array of days e.g. MONDAY-SUNDAY
+     * @param days
+     * @param curentDayIndex
+     * @return
+     */
+    public static Pair<ArrayList<ICalendarItem>, Integer> addDayHeaders(ArrayList<IDay> days, int curentDayIndex){
+
+        ArrayList<ICalendarItem> weekHeader = new ArrayList<ICalendarItem>();
         if ( days.size() < 7){
-            Pair.create( days , curentDayIndex);
+            return Pair.create(  CalendarDataSource.addDaysToHeaderItems( weekHeader, days ) ,
+                    curentDayIndex);
         }
 
         int index = 0;
-        ArrayList<IDay> weekHeader = new ArrayList<IDay>();
-        while ( index <= 7){
-            Date date = days.get(index).getDate();
-            date.
+        while ( index < 7){
+            IDay day = (IDay)days.get(index);
+            Calendar currentCalendar = Calendar.getInstance(TimeZone.getDefault());
+            currentCalendar.setTime(day.getDate());
+            String weekName = currentCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT,
+                    Locale.getDefault());
+            weekHeader.add( new DayHeader( weekName ) );
             index++;
         }
-
+        curentDayIndex+=7;
+        return Pair.create(  CalendarDataSource.addDaysToHeaderItems( weekHeader, days ) ,
+                curentDayIndex);
     }
 
 
+    /**
+     * Add IDay items to the header list casting them as ICalendarItems
+     * @param headerItems
+     * @param days
+     * @return
+     */
+    private static ArrayList<ICalendarItem> addDaysToHeaderItems( ArrayList<ICalendarItem> headerItems,
+                                                                  ArrayList<IDay> days ){
+        for ( IDay day:days){
+           headerItems.add( (ICalendarItem)day );
+        }
+        return headerItems;
+    }
+
+
+    /**
+     * Return a date n number of days offset from a reference date supplied
+     * @param referenceDate
+     * @param offSet
+     * @return
+     */
     public static Date dateWithOffSetDays( Date referenceDate, int offSet ){
         Calendar currentCalendar = Calendar.getInstance(TimeZone.getDefault());
         currentCalendar.setTime( referenceDate );

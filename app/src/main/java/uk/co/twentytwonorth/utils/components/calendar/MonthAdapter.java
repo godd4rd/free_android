@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,28 +18,34 @@ import uk.co.twentytwonorth.free.R;
 /**
  * Created by colinlight on 20/11/15.
  */
-public class CalendarAdapter extends BaseAdapter implements CalendarDataSource.CalendarPeriod {
+public class MonthAdapter extends BaseAdapter implements CalendarDataSource.CalendarPeriod {
 
     private Context mContext;
     private Date mDate;
-    private ArrayList<CalendarDataSource.IDay> mDays;
+    private ArrayList<CalendarDataSource.ICalendarItem> mCalendarItems;
     private int mCurrentDayIndex;
     private LayoutInflater mInflator;
 
 
-    public CalendarAdapter( Context context, Date date ){
+    public MonthAdapter(Context context, Date date){
         mContext = context;
         mInflator = LayoutInflater.from(mContext);
         mDate = date;
+
         Pair<ArrayList<CalendarDataSource.IDay>, Integer> daysIndex =
                 CalendarDataSource.daysForTimeframe(mDate, true, false, Calendar.DAY_OF_MONTH);
+
         daysIndex = CalendarDataSource.addMonthOverflowDays(daysIndex.first, daysIndex.second);
-        mDays = daysIndex.first;
+
+        Pair<ArrayList<CalendarDataSource.ICalendarItem>, Integer> itemsIndex =
+                CalendarDataSource.addDayHeaders(daysIndex.first, daysIndex.second);
+
+        mCalendarItems = itemsIndex.first;
         mCurrentDayIndex = daysIndex.second;
     }
 
     public int getCount(){
-        return mDays.size();
+        return mCalendarItems.size();
     }
 
     @Override
@@ -60,16 +67,23 @@ public class CalendarAdapter extends BaseAdapter implements CalendarDataSource.C
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        CalendarDataSource.IDay day = mDays.get(position);
-
+        CalendarDataSource.ICalendarItem item = mCalendarItems.get(position);
         if ( convertView == null ){
             convertView = mInflator.inflate(R.layout.calendar_day, null);
         }
 
         final TextView titleView = (TextView)convertView.findViewById(R.id.calendarDayTextView);
-        titleView.setText( day.getTitle() );
+
+        if ( item instanceof CalendarDataSource.IDay ){
+            convertView.setEnabled(true);
+        }else{
+            convertView.setEnabled(false);
+        }
+
+        titleView.setText( item.getTitle() );
         convertView.setEnabled(false);
         return convertView;
+
     }
 
 
