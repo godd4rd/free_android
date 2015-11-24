@@ -6,31 +6,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
+import android.widget.ListView;
 
-import java.util.Date;
 
 import uk.co.twentytwonorth.free.R;
-import uk.co.twentytwonorth.utils.components.calendar.MonthAdapter;
-import uk.co.twentytwonorth.utils.components.calendar.CalendarDataSource;
+import uk.co.twentytwonorth.free.adapter.BookingsListAdapater;
+
 
 
 public class BookingsFragment extends Fragment {
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstance ){
         View view = inflater.inflate(R.layout.fragment_bookings, container, false);
 
-        Date now = new Date();
-
-        GridView calendarGrid = (GridView)view.findViewById(R.id.calendarGridView);
-        MonthAdapter adapter = new MonthAdapter( this.getActivity().getApplicationContext(), now);
-        CalendarDataSource.CalendarPeriod period = (CalendarDataSource.CalendarPeriod)adapter;
-        calendarGrid.setNumColumns( period.getNumberOfDaysPerColumn() );
-        calendarGrid.setAdapter(adapter);
+        ListView bookingsList = (ListView)view.findViewById(R.id.bookingsView);
+        BookingsListAdapater adapter = new BookingsListAdapater( this.getActivity().getApplicationContext() );
+        bookingsList.setAdapter( adapter );
 
         return view;
     }

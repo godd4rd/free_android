@@ -61,6 +61,10 @@ public class MonthAdapter extends BaseAdapter implements CalendarDataSource.Cale
     @Override
     public boolean isEnabled(int position)
     {
+        CalendarDataSource.ICalendarItem item = mCalendarItems.get(position);
+        if ( item instanceof CalendarDataSource.IDay ){
+            return true;
+        }
         return false;
     }
 
@@ -73,13 +77,6 @@ public class MonthAdapter extends BaseAdapter implements CalendarDataSource.Cale
         }
 
         final TextView titleView = (TextView)convertView.findViewById(R.id.calendarDayTextView);
-
-        if ( item instanceof CalendarDataSource.IDay ){
-            convertView.setEnabled(true);
-        }else{
-            convertView.setEnabled(false);
-        }
-
         titleView.setText( item.getTitle() );
         convertView.setEnabled(false);
         return convertView;
