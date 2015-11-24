@@ -6,27 +6,83 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="120px"
-        android:id="@+id/imageView2"
+        android:id="@+id/backgroundImage"
         android:layout_gravity="center_horizontal">
     </ImageView>
 
+
+
     <TextView
+        style="@style/HeaderTitle"
+        android:gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp" android:text="Room" />
+        android:layout_height="60dp"
+        android:text="Room"
+        android:id="@+id/bookingHeaderTitleTextView" />
 
-    <TabWidget
-        android:id="@+id/periodTab"
+
+    <LinearLayout
+        android:layout_below="@+id/bookingHeaderTitleTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView2"
-        android:orientation="vertical"></TabWidget>
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:id="@+id/periodTab">
+        <Button android:text="NOW"
+            style="@style/TabButton"
+            android:id="@+id/nowTabButton"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="match_parent" />
+        <Button android:text="WEEK"
+            style="@style/TabButton"
+            android:id="@+id/weekTabButton"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="match_parent" />
+        <Button android:text="MONTH"
+            style="@style/TabButton"
+            android:id="@+id/monthTabButton"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="match_parent" />
+        <Button android:text="BOOKINGS"
+            android:id="@+id/bookingsTabButton"
+            style="@style/TabButton"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
-    <GridView android:layout_below="@+id/periodTab"
-    android:id="@+id/calendarGridView"
-    android:layout_width="match_parent"
-    android:layout_height="300dp"/>
+    <LinearLayout
+        android:layout_below="@+id/periodTab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:id="@+id/bookingTypeTab"
+        android:background="#000000">
+        <Button android:text="ROOMS"
+            android:id="@+id/roomsTabButton"
+            style="@style/TabButton"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="match_parent" />
+        <Button android:text="DESKS"
+            android:id="@+id/deskTabButton"
+            style="@style/TabButton"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+
+    <GridView
+        android:layout_below="@+id/bookingTypeTab"
+        android:id="@+id/calendarGridView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
 
 
 </RelativeLayout>

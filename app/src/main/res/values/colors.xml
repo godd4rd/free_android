@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#FFAD00</color>
     <color name="colorAccent">#FF4081</color>
     <color name="roomBookerGrey">#EBEBEB</color>
+    <color name="transparent">#00000000</color>
+    <color name="semitransparent">#c0000000</color>
 </resources>
