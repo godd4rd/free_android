@@ -14,9 +14,11 @@ import android.widget.GridView;
 import java.util.Date;
 
 import uk.co.twentytwonorth.free.R;
+import uk.co.twentytwonorth.free.model.Period;
 import uk.co.twentytwonorth.utils.components.calendar.CalendarDataSource;
-import uk.co.twentytwonorth.utils.components.calendar.MonthAdapter;
-import uk.co.twentytwonorth.utils.components.calendar.WeekAdapater;
+import uk.co.twentytwonorth.utils.components.calendar.CalendarAdapter;
+import uk.co.twentytwonorth.utils.components.calendar.Month;
+import uk.co.twentytwonorth.utils.components.calendar.Week;
 
 /**
  * Created by colinlight on 23/11/15.
@@ -32,7 +34,7 @@ public class BookingsListAdapater extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflator;
-    private BaseAdapter mCalendarAdapater;
+    private CalendarAdapter mCalendarAdapater;
     private ViewHolder mViewHolder;
 
     static class ViewHolder{
@@ -45,7 +47,7 @@ public class BookingsListAdapater extends BaseAdapter {
         mInflator = LayoutInflater.from(context);
 
         Date now = new Date();
-        mCalendarAdapater = new MonthAdapter( mContext, now);
+        mCalendarAdapater = new CalendarAdapter( mContext, new Week(now) );
     }
 
     public int getCount(){
@@ -75,30 +77,39 @@ public class BookingsListAdapater extends BaseAdapter {
         return convertView;
     }
 
-    public void setPeriod(){
+    public static class PeriodParams{
+        Period period;
+        Date date;
+        public PeriodParams(  Period period, Date date){
+            this.period = period;
+            this.date = date;
+        }
+    }
 
-        mCalendarAdapater = new WeekAdapater( mContext, new Date() );
 
-        new AsyncTask<GridView, Void,  CalendarDataSource.CalendarPeriod>(){
-            private  GridView calendarGrid;
+    public void setPeriod( Period period ){
+
+        new AsyncTask<PeriodParams, Void, CalendarDataSource.CalendarPeriod>(){
+            private Period period;
+            private  Date date;
 
             @Override
-            protected CalendarDataSource.CalendarPeriod doInBackground(GridView... params) {
-                calendarGrid = params[0];
-                CalendarDataSource.CalendarPeriod period = (CalendarDataSource.CalendarPeriod)mCalendarAdapater;
-                return period;
+            protected CalendarDataSource.CalendarPeriod doInBackground(PeriodParams... params) {
+                period = params[0].period;
+                date = params[0].date;
+                return  Period.calendarPeriod( period, date );
             }
 
             @Override
             protected void onPostExecute( CalendarDataSource.CalendarPeriod period) {
                 super.onPostExecute(period);
-                calendarGrid.setNumColumns(period.getNumberOfDaysPerColumn());
-                calendarGrid.setAdapter(mCalendarAdapater);
-                calendarGrid.setAlpha(0.0f);
-                calendarGrid.setVisibility(View.VISIBLE);
-                calendarGrid.animate().alpha(1.0f);
+                mCalendarAdapater.setPeriod(period);
+                mViewHolder.gridView.setNumColumns(mCalendarAdapater.getPeriod().getNumberOfDaysPerColumn());
+                mViewHolder.gridView.setAlpha(0.0f);
+                mViewHolder.gridView.setVisibility(View.VISIBLE);
+                mViewHolder.gridView.animate().alpha(1.0f);
             }
-        }.execute( mViewHolder.gridView );
+        }.execute( new PeriodParams(period, new Date() ) );
 
         this.notifyDataSetInvalidated();
     }
@@ -118,20 +129,22 @@ public class BookingsListAdapater extends BaseAdapter {
             viewHolder.gridView = calendarGrid;
             calendarGrid.setVisibility(View.INVISIBLE);
 
-            new AsyncTask<GridView, Void,  CalendarDataSource.CalendarPeriod>(){
+            //create the adapater
+            new AsyncTask<GridView, Void,  CalendarAdapter>(){
                 private  GridView calendarGrid;
 
                 @Override
-                protected CalendarDataSource.CalendarPeriod doInBackground(GridView... params) {
+                protected CalendarAdapter doInBackground(GridView... params) {
                     calendarGrid = params[0];
-                    CalendarDataSource.CalendarPeriod period = (CalendarDataSource.CalendarPeriod)mCalendarAdapater;
-                    return period;
+                    CalendarAdapter adapater = new CalendarAdapter( mContext, new Month( new Date() ) );
+                    return adapater;
                 }
 
                 @Override
-                protected void onPostExecute( CalendarDataSource.CalendarPeriod period) {
-                    super.onPostExecute(period);
-                    calendarGrid.setNumColumns(period.getNumberOfDaysPerColumn());
+                protected void onPostExecute( CalendarAdapter adapater) {
+                    super.onPostExecute(adapater);
+                    mCalendarAdapater = adapater;
+                    calendarGrid.setNumColumns( adapater.getPeriod().getNumberOfDaysPerColumn() );
                     calendarGrid.setAdapter(mCalendarAdapater);
                     calendarGrid.setAlpha(0.0f);
                     calendarGrid.setVisibility(View.VISIBLE);
@@ -139,38 +152,28 @@ public class BookingsListAdapater extends BaseAdapter {
                 }
             }.execute(calendarGrid);
 
-            this.createTabButtonListener((Button) convertView.findViewById(R.id.nowTabButton));
-            this.createTabButtonListener((Button) convertView.findViewById(R.id.weekTabButton) );
-            this.createTabButtonListener((Button) convertView.findViewById(R.id.monthTabButton) );
-            this.createTabButtonListener((Button) convertView.findViewById(R.id.bookingsTabButton) );
+            this.createTabButtonListener((Button) convertView.findViewById(R.id.nowTabButton), Period.NOW);
+            this.createTabButtonListener((Button) convertView.findViewById(R.id.weekTabButton), Period.WEEK );
+            this.createTabButtonListener((Button) convertView.findViewById(R.id.monthTabButton), Period.MONTH );
+            this.createTabButtonListener((Button) convertView.findViewById(R.id.bookingsTabButton), Period.BOOKINGS );
 
-            this.createTabButtonListener((Button) convertView.findViewById(R.id.roomsTabButton));
-            this.createTabButtonListener((Button) convertView.findViewById(R.id.deskTabButton) );
+            //this.createTabButtonListener((Button) convertView.findViewById(R.id.roomsTabButton));
+            ///this.createTabButtonListener((Button) convertView.findViewById(R.id.deskTabButton) );
 
         }
         return convertView;
     }
 
-    private void createTabButtonListener( Button tabButton ){
-        tabButton.setTag(this);
+    private void createTabButtonListener( Button tabButton, Period period ){
+        tabButton.setTag(period);
         tabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("BookingsListAdapater", "Button Selected: " + v.getId() + " : " + R.id.weekTabButton);
-
-                BookingsListAdapater adapater = (BookingsListAdapater)v.getTag();
-                adapater.setPeriod();
-
-//                switch ( v.getId() ){
-//                    case R.id.nowTabButton:
-//
-//
-//                }
-
+                setPeriod((Period) v.getTag());
             }
         });
     }
-
 
 
 }

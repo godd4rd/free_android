@@ -48,6 +48,7 @@ public class CalendarDataSource {
         public void setDelegate( CalendarPeriodDelegate delegate );
         public CalendarPeriodDelegate getDelegate();
 
+        public ArrayList<ICalendarItem> getCalendarIems();
         public String getPeriodTitle();
         public IDay selectedDay();
         public Float contentHeight();
@@ -58,7 +59,7 @@ public class CalendarDataSource {
 
 
     /**
-     Types adopting the 'CalendarPeriodDelegate' interface can be used to receive update information form when
+     Types adopting the 'CalendarPeriodDelegate' interface can be used to receive update information when
      a period changes e.g. scroll from month to month or week to week
      */
     public interface CalendarPeriodDelegate{
