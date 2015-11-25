@@ -13,11 +13,11 @@
 
     <TextView
         style="@style/HeaderTitle"
-        android:gravity="center"
+        android:gravity="center" android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:text="Room"
         android:id="@+id/bookingHeaderTitleTextView" />
 
@@ -54,6 +54,11 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_below="@+id/periodTab"
+        android:layout_width="100dp"
+        android:layout_height="4dp"
+        android:background="#ffffff"/>
 
 
 
@@ -77,6 +82,20 @@
             android:layout_width="0px"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/bookingTypeTab"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#000000">
+        <RelativeLayout
+            android:layout_below="@+id/bookingTypeTab"
+            android:layout_width="200dp"
+            android:layout_height="4dp"
+            android:background="@color/colorPrimary"/>
+
+    </RelativeLayout>
+
 
 
 
