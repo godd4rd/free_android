@@ -56,8 +56,8 @@ public class Week implements CalendarDataSource.CalendarPeriod {
     }
 
 
-    public Float contentHeight(){
-        return 1000.0f;
+    public float contentHeight(){
+        return 50.0f;
     }
 
     public int getNumberOfDaysPerColumn(){

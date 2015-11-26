@@ -51,7 +51,7 @@ public class CalendarDataSource {
         public ArrayList<ICalendarItem> getCalendarIems();
         public String getPeriodTitle();
         public IDay selectedDay();
-        public Float contentHeight();
+        public float contentHeight();
 
         public int getNumberOfDaysPerColumn();
 

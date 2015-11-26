@@ -58,8 +58,8 @@ public class Month implements CalendarDataSource.CalendarPeriod {
     }
 
 
-    public Float contentHeight() {
-        return 1000.0f;
+    public float contentHeight() {
+        return 300.0f;
     }
 
     public int getNumberOfDaysPerColumn() {

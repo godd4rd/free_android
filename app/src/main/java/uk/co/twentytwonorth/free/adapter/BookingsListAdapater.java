@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 
 import java.util.Date;
 
@@ -18,7 +19,9 @@ import uk.co.twentytwonorth.free.model.Period;
 import uk.co.twentytwonorth.utils.components.calendar.CalendarDataSource;
 import uk.co.twentytwonorth.utils.components.calendar.CalendarAdapter;
 import uk.co.twentytwonorth.utils.components.calendar.Month;
+import uk.co.twentytwonorth.utils.components.calendar.Now;
 import uk.co.twentytwonorth.utils.components.calendar.Week;
+import uk.co.twentytwonorth.utils.helper.LayoutHelper;
 
 /**
  * Created by colinlight on 23/11/15.
@@ -45,9 +48,6 @@ public class BookingsListAdapater extends BaseAdapter {
     public BookingsListAdapater( Context context ){
         mContext = context;
         mInflator = LayoutInflater.from(context);
-
-        Date now = new Date();
-        mCalendarAdapater = new CalendarAdapter( mContext, new Week(now) );
     }
 
     public int getCount(){
@@ -108,6 +108,8 @@ public class BookingsListAdapater extends BaseAdapter {
                 mViewHolder.gridView.setAlpha(0.0f);
                 mViewHolder.gridView.setVisibility(View.VISIBLE);
                 mViewHolder.gridView.animate().alpha(1.0f);
+                ViewGroup.LayoutParams gridParams = mViewHolder.gridView.getLayoutParams();
+                gridParams.height = (int)LayoutHelper.convertDpToPixel(mCalendarAdapater.getPeriod().contentHeight(), mContext);
             }
         }.execute( new PeriodParams(period, new Date() ) );
 
@@ -136,7 +138,7 @@ public class BookingsListAdapater extends BaseAdapter {
                 @Override
                 protected CalendarAdapter doInBackground(GridView... params) {
                     calendarGrid = params[0];
-                    CalendarAdapter adapater = new CalendarAdapter( mContext, new Month( new Date() ) );
+                    CalendarAdapter adapater = new CalendarAdapter( mContext, new Now( new Date() ) );
                     return adapater;
                 }
 
@@ -144,11 +146,13 @@ public class BookingsListAdapater extends BaseAdapter {
                 protected void onPostExecute( CalendarAdapter adapater) {
                     super.onPostExecute(adapater);
                     mCalendarAdapater = adapater;
-                    calendarGrid.setNumColumns( adapater.getPeriod().getNumberOfDaysPerColumn() );
+                    calendarGrid.setNumColumns(adapater.getPeriod().getNumberOfDaysPerColumn());
                     calendarGrid.setAdapter(mCalendarAdapater);
                     calendarGrid.setAlpha(0.0f);
                     calendarGrid.setVisibility(View.VISIBLE);
                     calendarGrid.animate().alpha(1.0f);
+                    ViewGroup.LayoutParams gridParams = calendarGrid.getLayoutParams();
+                    gridParams.height = (int)LayoutHelper.convertDpToPixel(adapater.getPeriod().contentHeight(), mContext);
                 }
             }.execute(calendarGrid);
 
@@ -169,7 +173,6 @@ public class BookingsListAdapater extends BaseAdapter {
         tabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("BookingsListAdapater", "Button Selected: " + v.getId() + " : " + R.id.weekTabButton);
                 setPeriod((Period) v.getTag());
             }
         });

@@ -2,6 +2,7 @@ package uk.co.twentytwonorth.utils.components.calendar;
 
 
 import android.util.Pair;
+import android.util.TypedValue;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -52,8 +53,8 @@ public class Now implements CalendarDataSource.CalendarPeriod {
     }
 
 
-    public Float contentHeight(){
-        return 1000.0f;
+    public float contentHeight(){
+        return 50.0f;
     }
 
     public int getNumberOfDaysPerColumn(){
